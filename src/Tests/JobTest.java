@@ -12,6 +12,7 @@ public class JobTest {
     Job job2;
     Job job3;
     Job job4;
+    Job job5;
 
     @Before
     public void createJobObject(){
@@ -30,7 +31,14 @@ public class JobTest {
                 new Location("Desert"),
                 new PositionType("Quality control"),
                 new CoreCompetency("Persistence"));
+
+        job5 = new Job("Product tester",
+                new Employer(""),
+                new Location("Desert"),
+                new PositionType("Quality control"),
+                new CoreCompetency("Persistence"));
     }
+
 
 @Test
 public void testSettingJobId(){
@@ -56,10 +64,29 @@ public void testJobConstructorSetsAllFields(){
 }
 @Test
     public void testJobsForEquality(){
-    Job job1 = new Job("Product tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency("Persistence"));
-    Job job2 = new Job("Product tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency("Persistence"));
-    assertFalse(job1.equals(job2));
+    assertFalse(job3.equals(job4));
 }
-
-
+@Test
+public void testJobtostringForBlanklines(){
+        assertEquals(true,job3.toString().startsWith("\n"));
+        assertEquals(true,job3.toString().endsWith("\n"));
+}
+@Test
+public void testjobtostringForEmptyField(){
+        assertEquals(true,job5.toString().contains(job5.getEmployer().getValue()));
+      assertEquals("Data not available",job5.getEmployer().getValue());
+//    System.out.println(job5.toString());
+}
+@Test
+public void testJobtoStringForDataContainsEachField(){
+        assertEquals("\n" +
+                "id:" + job3.getId() + "\n" +
+                "name:" + job3.getName()+ '\'' + "\n" +
+                "employer:" + job3.getEmployer() + "\n" +
+                "location:" + job3.getLocation() + "\n" +
+                "positionType:" + job3.getPositionType()+ "\n" +
+                "coreCompetency:" + job3.getCoreCompetency()+
+                "\n",job3.toString());
+//    System.out.println(job3.toString());
+}
 }
